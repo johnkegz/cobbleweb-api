@@ -1,7 +1,7 @@
 import { IsUrl } from 'class-validator';
 import { Photo } from 'src/photos/entities/photo.entity';
 import { User } from 'src/users/entities/user.entity';
-import { Entity, Column, ManyToMany } from 'typeorm';
+import { Entity, Column, ManyToMany, BeforeInsert } from 'typeorm';
 
 @Entity('clients')
 export class Client extends User {
@@ -11,4 +11,7 @@ export class Client extends User {
 
   @ManyToMany(() => Photo)
   photos: Photo[];
+
+  @Column()
+  FullName: string;
 }

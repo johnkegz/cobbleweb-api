@@ -10,6 +10,8 @@ import { ClientsModule } from './clients/clients.module';
 import { PhotosModule } from './photos/photos.module';
 import { Client } from './clients/entities/client.entity';
 import { Photo } from './photos/entities/photo.entity';
+import { AuthController } from './auth/auth.controller';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
@@ -27,8 +29,11 @@ import { Photo } from './photos/entities/photo.entity';
     UsersModule,
     ClientsModule,
     PhotosModule,
+    MulterModule.register({
+      dest: './upload',
+    }),
   ],
-  controllers: [AppController],
+  controllers: [AppController, AuthController],
   providers: [AppService],
 })
 export class AppModule {
