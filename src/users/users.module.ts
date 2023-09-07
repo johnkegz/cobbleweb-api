@@ -7,7 +7,7 @@ import { ClientsModule } from 'src/clients/clients.module';
 import { PhotosModule } from 'src/photos/photos.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User]), ClientsModule, PhotosModule],
+  imports: [TypeOrmModule.forFeature([User])],
   controllers: [UsersController],
   providers: [UsersService],
   exports: [UsersService],

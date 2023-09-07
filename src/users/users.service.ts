@@ -1,25 +1,14 @@
-import {
-  BadRequestException,
-  ConflictException,
-  HttpException,
-  HttpStatus,
-  Injectable,
-} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
-import { validate } from 'class-validator';
-import { ClientsService } from 'src/clients/clients.service';
-import { PhotosService } from 'src/photos/photos.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private usersRepository: Repository<User>,
-    private readonly clientsService: ClientsService,
-    private readonly photosService: PhotosService,
   ) {}
   async create(userData: CreateUserDto) {
     const { firstName, lastName, email, password, role } = userData;
@@ -50,25 +39,6 @@ export class UsersService {
 
   remove(id: number) {
     return `This action removes a #${id} user`;
-  }
-
-  async register(
-    registrationData: CreateUserDto,
-    photoData: Express.Multer.File[],
-  ) {
-    const userCreated = await this.create(registrationData);
-    if (userCreated) {
-      const photosCreated = await this.photosService.create(
-        photoData,
-        userCreated,
-      );
-      if (photosCreated) {
-        return await this.clientsService.create(
-          registrationData,
-          photosCreated,
-        );
-      }
-    }
   }
 
   findByEmail(email: string) {

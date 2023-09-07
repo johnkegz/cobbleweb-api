@@ -14,6 +14,7 @@ import { AuthController } from './auth/auth.controller';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { uniqueFileName } from './helpers/unique.filename';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { uniqueFileName } from './helpers/unique.filename';
       entities: [User, Client, Photo],
       synchronize: true, // TODO: In prooduction it should be false
     }),
+    AuthModule,
     UsersModule,
     ClientsModule,
     PhotosModule,
