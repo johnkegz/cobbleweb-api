@@ -5,6 +5,7 @@ import { Client } from './entities/client.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { Photo } from 'src/photos/entities/photo.entity';
 
 @Injectable()
 export class ClientsService {
@@ -12,7 +13,7 @@ export class ClientsService {
     @InjectRepository(Client)
     private readonly clientRepository: Repository<Client>,
   ) {}
-  async create(user: CreateUserDto) {
+  async create(user: CreateUserDto, photos: Photo[]) {
     const client = new Client();
     const { firstName, lastName, email, password, role } = user;
     client.firstName = firstName;
@@ -23,6 +24,7 @@ export class ClientsService {
     client.FullName = `${user.firstName} ${user.lastName}`;
     client.avatar =
       'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
+    client.photos = photos;
     const clientCreated = await this.clientRepository.save(client);
     return clientCreated;
   }

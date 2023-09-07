@@ -12,12 +12,14 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { validate } from 'class-validator';
 import { ClientsService } from 'src/clients/clients.service';
+import { PhotosService } from 'src/photos/photos.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private usersRepository: Repository<User>,
     private readonly clientsService: ClientsService,
+    private readonly photosService: PhotosService,
   ) {}
   async create(userData: CreateUserDto) {
     const { firstName, lastName, email, password, role } = userData;
@@ -25,19 +27,13 @@ export class UsersService {
     if (userExists) {
       throw new ConflictException('User with email already exists');
     }
-
     const user = new User();
     user.firstName = firstName;
     user.lastName = lastName;
     user.email = email;
     user.password = password;
     user.role = role;
-
-    const userCreated = await this.usersRepository.save(user);
-    if (userCreated) {
-      this.clientsService.create(userData);
-    }
-    return userCreated;
+    return await this.usersRepository.save(user);
   }
 
   findAll() {
@@ -56,8 +52,23 @@ export class UsersService {
     return `This action removes a #${id} user`;
   }
 
-  register(registrationData: CreateUserDto) {
-    return this.create(registrationData);
+  async register(
+    registrationData: CreateUserDto,
+    photoData: Express.Multer.File[],
+  ) {
+    const userCreated = await this.create(registrationData);
+    if (userCreated) {
+      const photosCreated = await this.photosService.create(
+        photoData,
+        userCreated,
+      );
+      if (photosCreated) {
+        return await this.clientsService.create(
+          registrationData,
+          photosCreated,
+        );
+      }
+    }
   }
 
   findByEmail(email: string) {

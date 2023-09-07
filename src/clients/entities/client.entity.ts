@@ -1,7 +1,7 @@
 import { IsUrl } from 'class-validator';
 import { Photo } from 'src/photos/entities/photo.entity';
 import { User } from 'src/users/entities/user.entity';
-import { Entity, Column, ManyToMany, BeforeInsert } from 'typeorm';
+import { Entity, Column, ManyToMany, BeforeInsert, JoinTable } from 'typeorm';
 
 @Entity('clients')
 export class Client extends User {
@@ -9,7 +9,8 @@ export class Client extends User {
   @IsUrl({}, { message: 'Avatar must be a valid URL' })
   avatar: string;
 
-  @ManyToMany(() => Photo)
+  @ManyToMany(() => Photo, { cascade: true })
+  @JoinTable()
   photos: Photo[];
 
   @Column()

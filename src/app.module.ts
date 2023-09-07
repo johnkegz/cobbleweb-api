@@ -12,6 +12,8 @@ import { Client } from './clients/entities/client.entity';
 import { Photo } from './photos/entities/photo.entity';
 import { AuthController } from './auth/auth.controller';
 import { MulterModule } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { uniqueFileName } from './helpers/unique.filename';
 
 @Module({
   imports: [
@@ -31,6 +33,10 @@ import { MulterModule } from '@nestjs/platform-express';
     PhotosModule,
     MulterModule.register({
       dest: './upload',
+      storage: diskStorage({
+        destination: './uploads',
+        filename: uniqueFileName,
+      }),
     }),
   ],
   controllers: [AppController, AuthController],

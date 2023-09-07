@@ -1,4 +1,5 @@
 import { IsUrl } from 'class-validator';
+import { Client } from 'src/clients/entities/client.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Entity,
@@ -8,6 +9,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  ManyToMany,
 } from 'typeorm';
 
 @Entity('photos')
@@ -25,6 +27,9 @@ export class Photo {
   @ManyToOne(() => User, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'User(Owner)' })
   user: User;
+
+  @ManyToMany(() => Client, { cascade: true })
+  clients: Client[];
 
   @CreateDateColumn()
   createdAt: Date;
