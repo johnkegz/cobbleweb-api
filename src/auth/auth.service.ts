@@ -4,6 +4,7 @@ import { PhotosService } from 'src/photos/photos.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
@@ -11,6 +12,7 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly clientsService: ClientsService,
     private readonly photosService: PhotosService,
+    private jwtService: JwtService,
   ) {}
 
   async register(
@@ -29,25 +31,23 @@ export class AuthService {
     }
   }
 
-  async validateUser(email: string, password: string): Promise<any> {
-    const { password: pass, ...result } = await this.usersService.findByEmail(
-      email,
-    );
-    const match = await bcrypt.compare(password, pass);
-    if (!match) {
+  async validateUser(email: string, pass: string): Promise<any> {
+    const user = await this.usersService.findByEmail(email);
+    if (user) {
+      const match = await bcrypt.compare(pass, user.password);
+      if (match) {
+        const { password, ...result } = user;
+        return result;
+      }
       return null;
     }
-    return result;
+    return null;
   }
 
-  //   async signIn(email: string, password: string): Promise<any> {
-  //     const { password: pass, ...result } = await this.usersService.findByEmail(
-  //       email,
-  //     );
-  //     const match = await bcrypt.compare(password, pass);
-  //     if (!match) {
-  //       throw new UnauthorizedException();
-  //     }
-  //     return result;
-  //   }
+  async login(user: any) {
+    const payload = { email: user.email, id: user.id };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
+  }
 }
