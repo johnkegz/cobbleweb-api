@@ -6,6 +6,7 @@ import * as express from 'express';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
+  app.setGlobalPrefix('api');
   app.use('/uploads', express.static('uploads'));
   await app.listen(3000);
 }

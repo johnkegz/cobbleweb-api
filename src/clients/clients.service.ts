@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { UpdateClientDto } from './dto/update-client.dto';
 import { Client } from './entities/client.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { Photo } from 'src/photos/entities/photo.entity';
 import { User } from 'src/users/entities/user.entity';
 
@@ -29,19 +27,14 @@ export class ClientsService {
     return clientCreated;
   }
 
-  findAll() {
-    return `This action returns all clients`;
+  async findClientByEmail(email: string) {
+    return await this.clientRepository.findOne({
+      where: { email: email },
+      relations: ['photos'],
+    });
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
     return `This action returns a #${id} client`;
-  }
-
-  update(id: number, updateClientDto: UpdateClientDto) {
-    return `This action updates a #${id} client`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} client`;
   }
 }
