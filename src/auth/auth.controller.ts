@@ -7,13 +7,16 @@ import {
   BadRequestException,
   HttpStatus,
   HttpCode,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
-import { UsersService } from 'src/users/users.service';
+// import { UsersService } from 'src/users/users.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { uniqueFileName } from 'src/helpers/unique.filename';
 import { AuthService } from './auth.service';
+import { LocalAuthGuard } from './local-auth.guard';
 
 @Controller('api')
 export class AuthController {
@@ -39,8 +42,9 @@ export class AuthController {
   }
 
   @HttpCode(HttpStatus.OK)
+  @UseGuards(LocalAuthGuard)
   @Post('login')
-  signIn(@Body() signInDto: Record<string, any>) {
-    return this.authService.signIn(signInDto.username, signInDto.password);
+  async login(@Request() req) {
+    return req.user;
   }
 }

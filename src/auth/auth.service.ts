@@ -29,14 +29,25 @@ export class AuthService {
     }
   }
 
-  async signIn(email: string, password: string): Promise<any> {
+  async validateUser(email: string, password: string): Promise<any> {
     const { password: pass, ...result } = await this.usersService.findByEmail(
       email,
     );
     const match = await bcrypt.compare(password, pass);
     if (!match) {
-      throw new UnauthorizedException();
+      return null;
     }
     return result;
   }
+
+  //   async signIn(email: string, password: string): Promise<any> {
+  //     const { password: pass, ...result } = await this.usersService.findByEmail(
+  //       email,
+  //     );
+  //     const match = await bcrypt.compare(password, pass);
+  //     if (!match) {
+  //       throw new UnauthorizedException();
+  //     }
+  //     return result;
+  //   }
 }

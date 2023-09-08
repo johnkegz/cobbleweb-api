@@ -10,7 +10,6 @@ import { ClientsModule } from './clients/clients.module';
 import { PhotosModule } from './photos/photos.module';
 import { Client } from './clients/entities/client.entity';
 import { Photo } from './photos/entities/photo.entity';
-import { AuthController } from './auth/auth.controller';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { uniqueFileName } from './helpers/unique.filename';
@@ -41,7 +40,7 @@ import { AuthModule } from './auth/auth.module';
       }),
     }),
   ],
-  controllers: [AppController, AuthController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {
