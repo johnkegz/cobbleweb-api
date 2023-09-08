@@ -5,6 +5,8 @@ import {
   UseInterceptors,
   UploadedFiles,
   BadRequestException,
+  HttpStatus,
+  HttpCode,
 } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
@@ -34,5 +36,11 @@ export class AuthController {
       throw new BadRequestException('At least 4 photos must be uploaded.');
     }
     return this.authService.register(registrationData, photos);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('login')
+  signIn(@Body() signInDto: Record<string, any>) {
+    return this.authService.signIn(signInDto.username, signInDto.password);
   }
 }
