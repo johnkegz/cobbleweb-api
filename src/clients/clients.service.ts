@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { Photo } from 'src/photos/entities/photo.entity';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class ClientsService {
@@ -12,7 +13,7 @@ export class ClientsService {
     @InjectRepository(Client)
     private readonly clientRepository: Repository<Client>,
   ) {}
-  async create(user: CreateUserDto, photos: Photo[]) {
+  async create(user: User, photos: Photo[]) {
     const client = new Client();
     const { firstName, lastName, email, password, role } = user;
     client.firstName = firstName;

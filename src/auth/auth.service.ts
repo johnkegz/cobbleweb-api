@@ -23,10 +23,7 @@ export class AuthService {
         userCreated,
       );
       if (photosCreated) {
-        return await this.clientsService.create(
-          registrationData,
-          photosCreated,
-        );
+        return await this.clientsService.create(userCreated, photosCreated);
       }
     }
   }
