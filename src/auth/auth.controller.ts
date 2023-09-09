@@ -32,6 +32,7 @@ import {
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  //Register new user
   @ApiOperation({ summary: 'Register new user' })
   @ApiBody(registrationRequest)
   @ApiResponse(regitstrationSuccess)
@@ -48,6 +49,7 @@ export class AuthController {
     return this.authService.register(registrationData, photos);
   }
 
+  //Login
   @ApiBody(loginRequest)
   @ApiOperation({ summary: 'Login with email and password' })
   @ApiResponse(loginUnAuthenticated)

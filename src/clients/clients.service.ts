@@ -24,13 +24,16 @@ export class ClientsService {
       'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
     client.photos = photos;
     const clientCreated = await this.clientRepository.save(client);
+    delete clientCreated['password'];
     return clientCreated;
   }
 
   async findClientByEmail(email: string) {
-    return await this.clientRepository.findOne({
+    const client = await this.clientRepository.findOne({
       where: { email: email },
       relations: ['photos'],
     });
+    delete client['password'];
+    return client;
   }
 }
