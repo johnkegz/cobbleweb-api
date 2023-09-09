@@ -10,11 +10,8 @@ import {
   UseGuards,
   Request,
 } from '@nestjs/common';
-// import { UsersService } from 'src/users/users.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { uniqueFileName } from 'src/helpers/unique.filename';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local-auth.guard';
 
@@ -23,14 +20,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
-  @UseInterceptors(
-    FilesInterceptor('photos', 10, {
-      storage: diskStorage({
-        destination: './uploads',
-        filename: uniqueFileName,
-      }),
-    }),
-  )
+  @UseInterceptors(FilesInterceptor('photos'))
   async register(
     @Body() registrationData: CreateUserDto,
     @UploadedFiles() photos: Express.Multer.File[],

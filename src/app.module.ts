@@ -14,6 +14,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { uniqueFileName } from './helpers/unique.filename';
 import { AuthModule } from './auth/auth.module';
+import { AwsModule } from './aws/aws.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { AuthModule } from './auth/auth.module';
         filename: uniqueFileName,
       }),
     }),
+    AwsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

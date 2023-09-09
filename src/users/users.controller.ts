@@ -22,6 +22,6 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Get('me')
   findClient(@Request() req) {
-    return this.usersService.findOne(req.user.email);
+    return this.usersService.findClient(req.user.email);
   }
 }

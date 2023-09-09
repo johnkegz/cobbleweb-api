@@ -34,11 +34,11 @@ export class UsersService {
     return hash;
   }
 
-  findOne(email: string) {
-    return this.clientsService.findClientByEmail(email);
-  }
-
   findByEmail(email: string) {
     return this.usersRepository.findOneBy({ email });
+  }
+
+  findClient(email: string) {
+    return this.clientsService.findClientByEmail(email);
   }
 }
