@@ -33,8 +33,4 @@ export class ClientsService {
       relations: ['photos'],
     });
   }
-
-  async findOne(id: number) {
-    return `This action returns a #${id} client`;
-  }
 }

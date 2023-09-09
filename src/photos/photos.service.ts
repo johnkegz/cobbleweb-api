@@ -35,8 +35,4 @@ export class PhotosService {
     );
     return uploadedUrls;
   }
-
-  findAll() {
-    return `This action returns all photos`;
-  }
 }

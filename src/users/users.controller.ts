@@ -7,18 +7,29 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import {
+  ApiHeader,
+  ApiBearerAuth,
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+} from '@nestjs/swagger';
+import { userProfile } from 'src/swagger/example.response';
 
+@ApiTags('Users')
+@ApiBearerAuth()
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
-  }
-
+  @ApiHeader({
+    name: 'Authorization',
+    description: 'Bearer Token',
+    required: true,
+  })
+  @ApiOperation({ summary: 'Get profile' })
+  @ApiResponse(userProfile)
   @UseGuards(JwtAuthGuard)
   @Get('me')
   findClient(@Request() req) {
