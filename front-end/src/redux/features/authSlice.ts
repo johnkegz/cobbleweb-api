@@ -1,21 +1,24 @@
+import { registerUser } from '@/api/auth';
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { type } from 'os';
 
 type InitialState = {
    value: AuthState
+   error: string
 }
 
 type AuthState = {
-        isAUth: boolean,
-        userName: string ,
-        uid: string
+        isAUth: boolean;
+        userName: string;
+        loading: 'idle' | 'pending' | 'succeeded' | 'failed'
     }
 
 const initialState = {
     value: {
         isAUth: false,
-        userName: ''
-    } as AuthState
+        userName: '',
+        loading: 'idle',
+    } as AuthState,
+    error: ''
 } as InitialState;
 
 export const auth = createSlice({
@@ -26,7 +29,22 @@ export const auth = createSlice({
             state.value.isAUth = true;
             state.value.userName = action.payload;
         }
-    }
+    },
+    extraReducers: (builder) => {
+    builder
+    .addCase(registerUser.pending, (state) => {
+        console.log("registerUser +++>", registerUser)
+      state.value.loading = 'pending';
+    })
+    .addCase(registerUser.fulfilled, (state, action) => {
+        console.log("registerUser +++>", registerUser)
+      state.value.loading = 'succeeded';
+    })
+    .addCase(registerUser.rejected, (state, action) => {
+        console.log("registerUser +++>", registerUser)
+      state.value.loading = 'failed';
+    });
+  },
 }) 
 
  export const { testRedux } = auth.actions;
