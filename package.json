@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "start:backend": "cd api && yarn start:dev",
+    "start:frontend": "cd front-end && yarn dev",
+    "start": "concurrently \"yarn start:backend\" \"yarn start:frontend\""
+  },
+  "dependencies": {
+    "concurrently": "^8.2.1"
+  }
+}

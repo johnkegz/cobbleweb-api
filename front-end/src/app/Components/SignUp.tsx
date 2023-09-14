@@ -25,8 +25,18 @@ const SignUp = () => {
     control
   } = useForm<Inputs>()
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    dispatch(registerUser(data))
-    console.log(">>>>",data)
+    const formData = new FormData(); 
+    formData.append('firstName', data.firstName);
+    formData.append('lastName', data.lastName);
+    formData.append('email', data.email);
+    formData.append('role', data.role);
+    if (data.photos) {
+      for (let i = 0; i < data.photos.length; i++) {
+        formData.append('photos', data.photos[i]); 
+      }
+    }
+    formData.append('password', data.password);
+    dispatch(registerUser(formData));
   }
 
     return (
@@ -84,7 +94,6 @@ const SignUp = () => {
                     validate: (fieldValue) => fieldValue.length  >= 4 || "At least 4 photos should be selected."
                 })}
             />
-            {/* TODO: Test accept="image/*" */}
             <p>{errors.photos?.message}</p>
             <input 
                 placeholder='Enter password' 
