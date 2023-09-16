@@ -111,7 +111,7 @@ const SignUp = () => {
                 }
             />
             <p>{errors.password?.message}</p>
-            <input type="submit" />
+            <button type="submit" >submit</button>
             </form>
             <DevTool control={control} />
         </div>
