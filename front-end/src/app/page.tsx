@@ -6,9 +6,8 @@ export default function Home() {
   return (
     <div className={styles.home}>
       <Navbar />
-      <div className="nav">
-        <div className="nav-sections">Cobbleweb</div>
-        <div className="nav-sections">Login</div>
+      <div className={styles.homeBody}>
+        <div className={styles.bodyText}>Custom Online Marketplace Solutions</div>
       </div>
     </div>
   );

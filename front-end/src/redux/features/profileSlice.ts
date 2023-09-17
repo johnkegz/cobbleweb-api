@@ -7,13 +7,17 @@ type InitialState = {
 }
 
 type ProfileState = {
-    email: string;
+    fullName: string;
+    photos: string[];
+    avatar: string;
 }
 
 const initialState = {
     loading: 'idle',
     profile: {
-        email: ''
+        fullName: '',
+        photos: [],
+        avatar: ''
     }
 } as InitialState;
 
@@ -29,7 +33,10 @@ export const profile = createSlice({
     })
     .addCase(getProfile.fulfilled, (state, action) => {
       state.loading = 'fulfilled';
-      state.profile.email = action.payload.email
+      console.log('here +++++>', action.payload);
+      state.profile.fullName = action.payload.FullName
+      state.profile.photos = action.payload.photos
+      state.profile.avatar = action.payload.avatar
     })
     .addCase(getProfile.rejected, (state) => {
       state.loading = 'failed';

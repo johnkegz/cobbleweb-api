@@ -16,7 +16,6 @@ export const getProfile = createAsyncThunk("profile/getProfile", async () => {
     }
     return data;
   } catch (e) {
-    console.log(e);
     return e;
   }
 });

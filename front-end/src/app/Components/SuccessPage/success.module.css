@@ -1,0 +1,33 @@
+/* Success Page */
+.successContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+}
+
+.successText {
+  font-size: 60px;
+  color: green;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+
+.successTextInstractions {
+  font-size: 18px;
+  color: #333;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}

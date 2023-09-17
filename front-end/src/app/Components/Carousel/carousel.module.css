@@ -1,0 +1,44 @@
+/* Carousel.module.css */
+.carousel-container {
+  width: 40px;
+  margin: 0 auto;
+}
+
+.carousel {
+  background-color: #f4f4f4;
+}
+
+.carousel .slider-wrapper {
+  border: 2px solid #ddd;
+  border-radius: 8px;
+}
+
+.carousel .slide {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.carousel .thumb {
+  display: none;
+}
+
+.carousel .carousel-control-prev,
+.carousel .carousel-control-next {
+  background-color: transparent;
+  color: #333;
+  font-size: 24px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.carousel .carousel-control-prev:hover,
+.carousel .carousel-control-next:hover {
+  color: #555;
+}
+
+.carousel img {
+  height: 50px;
+  width: 100%;
+}

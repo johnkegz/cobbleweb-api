@@ -1,8 +1,7 @@
 body {
   margin: 0;
-  padding-left: 20px;
-  padding-right: 20px;
   font-family: Arial, Helvetica, sans-serif;
+  background-color: rgba(250, 219, 216, 0.7);
 }
 
 nav {
@@ -10,7 +9,7 @@ nav {
 
 /* Form */
 .container {
-  background-color: pink;
+  background-color: rgba(250, 219, 216, 0.7);
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -73,11 +72,6 @@ nav {
   background-color: #0078bf;
 }
 
-.form-field p {
-  font-size: 12px;
-  color: red;
-}
-
 .input-field {
   width: 100%;
   padding: 10px;
@@ -95,37 +89,32 @@ nav {
   outline: none;
 }
 
-/* Success Page */
-.success-container {
+.error-message {
+  height: 5px;
+  font-size: 12px;
+  color: red;
+}
+
+/* link */
+.linkContainer {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  height: 300px;
-  border: 1px solid #ccc;
 }
 
-.success-text {
-  font-size: 60px;
-  color: green;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
+.link {
+  text-decoration: none;
+  font-size: 14px;
 }
 
-.success-text-instractions {
-  font-size: 18px;
-  color: #333;
-  font-family: Arial, Helvetica, sans-serif;
-  margin-top: 20px;
-  margin-bottom: 20px;
+.passwordVisibility{
+  position: relative;
 }
 
-.button {
-  background-color: #3498db;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
+.passwordVisibilityText{
+  position: absolute;
+  top: 25%;
+  right: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  font-size: 12px;
 }

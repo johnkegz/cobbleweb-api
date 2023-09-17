@@ -2,11 +2,13 @@
  import registerReducer from './features/registerSlice'
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 import signReducer from './features/loginSlice';
+import profileReducer from './features/profileSlice';
 
  export const store = configureStore({
     reducer: {
         registerReducer,
-        signReducer
+        signReducer,
+        profileReducer
     }
  });
 
