@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.menu {
+  text-decoration: none;
+  color: #fff;
+  margin-left: 20px;
+  font-weight: bold;
+}

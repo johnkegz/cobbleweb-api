@@ -20,7 +20,7 @@ export const login = createSlice({
     })
     .addCase(loginUser.fulfilled, (state, action) => {
       state.loading = 'fulfilled';
-      localStorage.setItem("token", action.payload.access_token);
+      localStorage.setItem("access_token", action.payload.access_token);
     })
     .addCase(loginUser.rejected, (state) => {
       state.loading = 'failed';

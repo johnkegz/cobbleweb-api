@@ -1,4 +1,4 @@
-import { registerUser } from '@/api/auth';
+import { registerUser } from '@/api/register';
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 type InitialState = {
@@ -21,8 +21,8 @@ const initialState = {
     error: ''
 } as InitialState;
 
-export const auth = createSlice({
-    name: 'auth',
+export const register = createSlice({
+    name: 'register',
     initialState,
     reducers: {
         testRedux: (state, action: PayloadAction<string>) => {
@@ -33,19 +33,16 @@ export const auth = createSlice({
     extraReducers: (builder) => {
     builder
     .addCase(registerUser.pending, (state) => {
-        console.log("registerUser +++>", registerUser)
       state.value.loading = 'pending';
     })
     .addCase(registerUser.fulfilled, (state, action) => {
-        console.log("registerUser +++>", registerUser)
       state.value.loading = 'succeeded';
     })
     .addCase(registerUser.rejected, (state, action) => {
-        console.log("registerUser +++>", registerUser)
       state.value.loading = 'failed';
     });
   },
 }) 
 
- export const { testRedux } = auth.actions;
- export default auth.reducer;
+ export const { testRedux } = register.actions;
+ export default register.reducer;

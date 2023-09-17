@@ -5,7 +5,7 @@ type LoginData = {
     password: string;
 }
 
-// Define an asynchronous thunk action creator
+// Asynchronous thunk action creator
 export const loginUser = createAsyncThunk('login/loginUser', async (loginData: LoginData) => {
     try{
   const response = await fetch("http://localhost:3001/api/login",{
