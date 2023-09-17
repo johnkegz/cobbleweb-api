@@ -5,8 +5,8 @@ import { useDispatch } from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { registerUser } from "@/api/register";
 import { useRouter } from "next/navigation";
-import Notification from "../Notification";
 import { useState } from "react";
+import SuccessPage from "../SuccessPage";
 
 type Inputs = {
   firstName: string;
@@ -27,6 +27,7 @@ const SignUp = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setError
   } = useForm<Inputs>();
   const router = useRouter();
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -47,27 +48,37 @@ const SignUp = () => {
         type: 'success',
         message: 'Registration success'
     })
-    const timeout = setTimeout(() => {
-       router.push("/login");
-      }, 3000);
+    // const timeout = setTimeout(() => {
+    //    router.push("/login");
+    //   }, 3000);
       
     }
     if (response?.payload?.statusCode === 409) {
+        setError("email", {
+        type: "manual",
+        message: "User with this email exists",
+      });
          setSuccessMessage({
         type: 'error',
-        message: 'User with email exists'
+        message: 'User with this email exists'
     })
     }
   };
 
   return (
     <div className='container'>
+        {successMessage.type === "success" ? (
+        <SuccessPage />
+      ) : (
       <div className='form-container'>
         <div className='logo-position'>CobbleWeb</div>
         <div className='page-text'>Register</div>
         <div className='form-section'>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className='form-field'>
+                <label>
+                First name
+            </label>
               <input className='input-field'
                 placeholder="Enter first name"
                 {...register("firstName", {
@@ -88,6 +99,9 @@ const SignUp = () => {
               <p>{errors.firstName?.message}</p>
             </div>
             <div className='form-field'>
+                <label>
+                Last name
+            </label>
               <input className='input-field'
                 placeholder="Enter last name"
                 {...register("lastName", {
@@ -108,6 +122,9 @@ const SignUp = () => {
               <p>{errors.lastName?.message}</p>
             </div>
             <div className='form-field'>
+                <label>
+                Email
+            </label>
               <input className='input-field'
                 type="email"
                 placeholder="Enter email"
@@ -122,6 +139,9 @@ const SignUp = () => {
               <p>{errors.email?.message}</p>
               </div>
               <div className='form-field'>
+                <label>
+                Role
+            </label>
               <select className='input-field input-field-select-text' {...register("role", { required: "Role is required." })}>
                 <option value="">Select a role</option>
                 <option value="admin">Admin</option>
@@ -130,6 +150,9 @@ const SignUp = () => {
               <p>{errors.role?.message}</p>
             </div>
             <div className='form-field'>
+                <label>
+                Photos
+            </label>
               <input className='input-field'
                 type="file"
                 multiple
@@ -144,7 +167,12 @@ const SignUp = () => {
               <p>{errors.photos?.message}</p>
             </div>
             <div className='form-field'>
-              <input className='input-field'
+                <label>
+                Password
+            </label>
+              <input 
+                className='input-field'
+                type="password"
                 placeholder="Enter password"
                 {...register("password", {
                   required: {
@@ -170,11 +198,9 @@ const SignUp = () => {
             <div className='form-field'>
               <button type="submit">Register</button>
             </div>
-          
         </form>
         </div>
-      </div>
-      <Notification messageToShow={successMessage} />
+      </div>)}
     </div>
   );
 };
