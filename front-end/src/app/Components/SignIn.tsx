@@ -3,9 +3,10 @@
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { DevTool } from "@hookform/devtools";
 import { loginUser } from "@/api/login";
 import { useRouter } from "next/navigation";
+import Notification from "./Notification";
+import { useState } from "react";
 
 type Inputs = {
   firstName: string;
@@ -25,21 +26,36 @@ const SignIn = () => {
   } = useForm<Inputs>();
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
+  const [successMessage, setSuccessMessage] = useState({
+        type: '',
+        message: ''
+    });
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const response = await dispatch(loginUser(data));
     if (response?.payload?.access_token) {
-      alert("Success");
+      setSuccessMessage({
+        type: 'success',
+        message: 'Registration success'
+    })
       router.push("/profile");
     }
     if (response.payload.statusCode === 401) {
-      alert("error");
+      setSuccessMessage({
+        type: 'error',
+        message: 'Unauthorized'
+    })
     }
   };
-  return (
-    <div>
+  return (<div className='container'>
+      <div className='form-container'>
+        <div className='logo-position'>CobbleWeb</div>
+        <div className='page-text'>Register</div>
+        <div className='form-section'>
       <form onSubmit={handleSubmit(onSubmit)} method="POST" noValidate>
+        <div className='form-field'>
         <input
           type="email"
+          className='input-field'
           placeholder="Enter email"
           {...register("email", {
             required: "Email is required.",
@@ -49,8 +65,12 @@ const SignIn = () => {
             },
           })}
         />
+        
         <p>{errors.email?.message}</p>
+        </div>
+        <div className='form-field'>
         <input
+            className='input-field'
           placeholder="Enter password"
           {...register("password", {
             required: {
@@ -60,9 +80,14 @@ const SignIn = () => {
           })}
         />
         <p>{errors.password?.message}</p>
-        <button type="submit">submit</button>
+        </div>
+        <div className='form-field'>
+        <button type="submit">Login</button>
+        </div>
       </form>
-      <DevTool control={control} />
+      </div>
+      </div>
+      <Notification messageToShow={successMessage} />
     </div>
   );
 };
