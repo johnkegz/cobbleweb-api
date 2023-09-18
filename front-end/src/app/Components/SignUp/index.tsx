@@ -1,6 +1,6 @@
 "use client";
 
-import { AppDispatch } from "@/redux/store";
+import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { registerUser } from "@/api/register";
@@ -34,6 +34,7 @@ const SignUp = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
   const dispatch = useDispatch<AppDispatch>();
+  const store = useAppSelector((state) => state);
   const {
     register,
     handleSubmit,
@@ -42,6 +43,8 @@ const SignUp = () => {
     watch,
   } = useForm<Inputs>();
   const router = useRouter();
+
+  //Submit data
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const formData = new FormData();
     formData.append("firstName", data.firstName);
@@ -239,7 +242,6 @@ const SignUp = () => {
                     onClick={toggleConfirmPasswordVisibility}
                   >
                     {showConfirmPassword ? "Hide" : "Show"}
-                    
                   </div>
                 </div>
                 <div className="error-message">
@@ -247,7 +249,18 @@ const SignUp = () => {
                 </div>
               </div>
               <div className="form-field">
-                <button type="submit">Register</button>
+                <button
+                  type="submit"
+                  disabled={
+                    store.registerReducer.value.loading == "pending"
+                      ? true
+                      : false
+                  }
+                >
+                  {store.registerReducer.value.loading == "pending"
+                    ? "Registering..."
+                    : "Register"}
+                </button>
               </div>
             </form>
           </div>

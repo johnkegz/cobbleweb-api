@@ -1,6 +1,6 @@
 "use client";
 
-import { AppDispatch } from "@/redux/store";
+import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { loginUser } from "@/api/login";
@@ -19,10 +19,12 @@ type Inputs = {
 };
 
 const SignIn = () => {
-    const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+  const store = useAppSelector((state) => state);
+
   const {
     register,
     handleSubmit,
@@ -48,7 +50,7 @@ const SignIn = () => {
     }
   };
   return (
-<div className="container">
+    <div className="container">
       <div className="form-container">
         <div className="logo-position">
           <Link href="/">
@@ -83,28 +85,32 @@ const SignIn = () => {
             <div className="form-field">
               <label>Password</label>
               <div className="passwordVisibility">
-              <input
-                type={showPassword ? "text" : "password"}
-                className="input-field"
-                placeholder="Enter password"
-                {...register("password", {
-                  required: {
-                    value: true,
-                    message: "Password is required",
-                  },
-                })}
-              />
-              <div
-                    className="passwordVisibilityText"
-                    onClick={togglePasswordVisibility}
-                  >
-                    {showPassword ? "Hide" : "Show"}
-                  </div>
-              <div className="error-message">{errors.password?.message}</div>
-            </div>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  className="input-field"
+                  placeholder="Enter password"
+                  {...register("password", {
+                    required: {
+                      value: true,
+                      message: "Password is required",
+                    },
+                  })}
+                />
+                <div
+                  className="passwordVisibilityText"
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? "Hide" : "Show"}
+                </div>
+                <div className="error-message">{errors.password?.message}</div>
+              </div>
             </div>
             <div className="form-field">
-              <button type="submit">Login</button>
+              <button type="submit">
+                {store.signReducer.loading == "pending"
+                  ? "Logging in..."
+                  : "Login"}
+              </button>
             </div>
           </form>
         </div>
