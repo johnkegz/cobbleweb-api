@@ -25,7 +25,7 @@ const Profile = () => {
       </div>
       <div className={styles.carouselWrapper}>
         <div className={styles.carouselContainerDiv}>
-          {store.profileReducer.profile.photos.length !== 0 && <Carousel images={store.profileReducer.profile.photos} />}
+          {store.profileReducer.profile.photos && store.profileReducer.profile.photos.length !== 0 && <Carousel images={store.profileReducer.profile.photos} />}
         </div>
       </div>
     </div>

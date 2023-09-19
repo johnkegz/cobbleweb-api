@@ -10,7 +10,7 @@ const ProfilePage = () => {
   useEffect(() => {
     if (
       typeof localStorage !== "undefined" &&
-      !localStorage.getItem("access_token")
+      (localStorage.getItem("access_token") === 'undefined' || !localStorage.getItem("access_token"))
     ) {
       route.push("/login");
     }

@@ -19,7 +19,6 @@ export const login = createSlice({
       state.loading = 'pending';
     })
     .addCase(loginUser.fulfilled, (state, action) => {
-        console.log("login ++++++++++>", action.payload);
       state.loading = 'fulfilled';
       localStorage.setItem("access_token", action.payload.access_token);
     })

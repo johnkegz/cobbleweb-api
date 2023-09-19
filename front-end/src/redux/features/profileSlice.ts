@@ -33,7 +33,6 @@ export const profile = createSlice({
     })
     .addCase(getProfile.fulfilled, (state, action) => {
       state.loading = 'fulfilled';
-      console.log('here +++++>', action.payload);
       state.profile.fullName = action.payload.FullName
       state.profile.photos = action.payload.photos
       state.profile.avatar = action.payload.avatar
